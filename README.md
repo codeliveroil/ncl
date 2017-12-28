@@ -7,7 +7,7 @@ Works on: macOS, Linux
 
 Installation
 ------------
-Download the latest release from the releases page and copy it to /usr/local/bin
+Download the [release](https://github.com/codeliveroil/ncl/archive/v1.0.zip), unzip and run install.sh
 
 Usage
 -----
