@@ -25,11 +25,11 @@ print_cal () {
   local i=0
   for l in $(cal ${opt} $1 $2); do
     printf "%-${max}s\n" "${l}"
-    let i=${i}+1
+    i=$(( ${i} + 1 ))
   done
   while [ ${i} -lt $3 ]; do
     printf "%-${max}s\n" ""
-    let i=${i}+1
+    i=$(( ${i} + 1 ))
   done
 }
 
@@ -57,7 +57,7 @@ fi
 # Render cal
 echo ""
 while true; do
-  let lc=$(cal ${month} ${year} | wc -l | xargs)
+  lc=$(cal ${month} ${year} | wc -l | xargs)
   [ $? -ne 0 ] && exit 1
   if [ ${month} -eq ${curr_month} ] && [ ${year} -eq ${curr_year} ]; then
     print_cal ${month} ${year} ${lc} | grep --color=auto -C10 -w "$(date +%-d)"
@@ -76,10 +76,10 @@ while true; do
         if [ ${year} -eq 1 ] && [ ${month} -eq 1 ]; then #check for underflow
           break
         fi
-        let month=${month}-1
+        month=$(( 10#${month} - 1 ))
         if [ ${month} -eq 0 ]; then
           month=12
-          let year=${year}-1
+          year=$(( 10#${year} - 1 ))
         fi
         break
         ;;
@@ -87,10 +87,10 @@ while true; do
         if [ ${year} -eq 9999 ] && [ ${month} -eq 12 ]; then #check for overflow
           break
         fi
-        let month=${month}+1
+        month=$(( 10#${month} + 1 ))
         if [ ${month} -eq 13 ]; then
           month=1
-          let year=${year}+1
+          year=$(( 10#${year} + 1 ))
         fi
         break
         ;;
