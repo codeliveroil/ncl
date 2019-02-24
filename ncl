@@ -48,9 +48,10 @@ curr_year=$(date +%Y)
 [ "$1" == "" ] && month=${curr_month} || month=$1
 [ "$2" == "" ] && year=${curr_year} || year=$2
 
-# Disable highlighting if linux
+# Disable highlighting if linux or macOS Mojave+
 opt=""
-if [ "$(uname)" == "Linux" ]; then
+cal -h > /dev/null
+if [ $? -eq 0 ]; then
   opt="-h"
 fi
 
