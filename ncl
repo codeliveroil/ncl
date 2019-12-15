@@ -33,8 +33,18 @@ print_cal () {
   done
 }
 
+check_num () {
+  local num=$1
+  if [ -z "${num//[0-9]}" ] && [ -n "$num" ]; then
+    return
+  else
+    echo "$num is not a number. See 'ncl -help'"
+    exit
+  fi
+}
+
 # Parse args
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$1" == "-help" ]; then
   echo "A navigable version of the in-built calendar (cal)."
   echo "Usage: $(basename ${0}) [month [year]]"
   echo "       <- (left arrow) : Previous month"
@@ -47,6 +57,8 @@ curr_month=$(date +%m)
 curr_year=$(date +%Y)
 [ "$1" == "" ] && month=${curr_month} || month=$1
 [ "$2" == "" ] && year=${curr_year} || year=$2
+check_num "$month"
+check_num "$year"
 
 # Disable highlighting if linux or macOS Mojave+
 opt=""
